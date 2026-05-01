@@ -3,7 +3,7 @@
 A mission-critical, production-grade Incident Management System built to monitor distributed infrastructure stacks and manage failure mediation workflows.
 
 > **Assignment:** Infrastructure / SRE Intern — Zeotap  
-> **GitHub:** *(https://github.com/mohdasifh77/ims)*
+> **GitHub:** *(https://github.com/mohdasifh77/ims-zeotap)*
 
 ---
 
