@@ -1,0 +1,98 @@
+{
+  "description": "Sample failure event payloads for IMS testing",
+  "events": [
+    {
+      "scenario": "RDBMS Primary Outage",
+      "signal": {
+        "component_id": "POSTGRES_PRIMARY_01",
+        "component_type": "RDBMS",
+        "message": "Connection refused on port 5432 - database process not responding",
+        "error_code": "ECONNREFUSED",
+        "latency_ms": 0,
+        "severity": "P0",
+        "metadata": {
+          "host": "db-primary.internal",
+          "port": 5432,
+          "database": "production"
+        }
+      }
+    },
+    {
+      "scenario": "MCP Host Failure (cascade from RDBMS)",
+      "signal": {
+        "component_id": "MCP_HOST_CLUSTER_A",
+        "component_type": "MCP_HOST",
+        "message": "Health check failed. Database connection pool exhausted.",
+        "error_code": "HEALTH_CHECK_FAILED",
+        "latency_ms": 9999,
+        "severity": "P1",
+        "metadata": {
+          "reason": "db_pool_exhausted",
+          "db_host": "POSTGRES_PRIMARY_01"
+        }
+      }
+    },
+    {
+      "scenario": "Cache Cluster Degradation",
+      "signal": {
+        "component_id": "CACHE_CLUSTER_01",
+        "component_type": "CACHE",
+        "message": "Redis cluster: high eviction rate detected. Hit rate dropped to 45%",
+        "error_code": "HIGH_EVICTION_RATE",
+        "latency_ms": 350,
+        "severity": "P2",
+        "metadata": {
+          "hit_rate": 45,
+          "evictions_per_sec": 800
+        }
+      }
+    },
+    {
+      "scenario": "Async Queue Backup",
+      "signal": {
+        "component_id": "RABBITMQ_MAIN",
+        "component_type": "QUEUE",
+        "message": "Queue depth exceeded threshold. 50000 messages unprocessed.",
+        "error_code": "QUEUE_DEPTH_EXCEEDED",
+        "latency_ms": 5000,
+        "severity": "P1",
+        "metadata": {
+          "queue_depth": 50000,
+          "consumer_count": 0
+        }
+      }
+    },
+    {
+      "scenario": "NoSQL Latency Spike",
+      "signal": {
+        "component_id": "MONGODB_SHARD_01",
+        "component_type": "NOSQL",
+        "message": "High read latency detected on shard. P99 latency: 2500ms",
+        "error_code": "HIGH_LATENCY",
+        "latency_ms": 2500,
+        "severity": "P2",
+        "metadata": {
+          "shard": "shard-01",
+          "p99_latency_ms": 2500,
+          "replica_set": "rs0"
+        }
+      }
+    },
+    {
+      "scenario": "API Gateway Errors",
+      "signal": {
+        "component_id": "API_GATEWAY_01",
+        "component_type": "API",
+        "message": "HTTP 503 Service Unavailable on /api/users endpoint",
+        "error_code": "HTTP_503",
+        "latency_ms": 30000,
+        "severity": "P1",
+        "metadata": {
+          "endpoint": "/api/users",
+          "status_code": 503,
+          "error_rate_percent": 95
+        }
+      }
+    }
+  ]
+}
